@@ -59,3 +59,4 @@ export const FloatingActions: React.FC = () => {
     </div>
   );
 };
+

@@ -211,3 +211,4 @@ export const productsData: ProductItem[] = [
     image: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=700&q=80",
   }
 ];
+

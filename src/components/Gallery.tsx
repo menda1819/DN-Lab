@@ -220,3 +220,4 @@ export const Gallery: React.FC = () => {
     </section>
   );
 };
+

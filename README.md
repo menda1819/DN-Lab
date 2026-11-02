@@ -89,3 +89,4 @@ Open [`src/data/products.ts`](file:///Users/menda/Documents/DN Lab/DN-Lab/src/da
 
 ### 4. Updating Gallery Photos
 Add or replace URLs in [`src/data/gallery.ts`](file:///Users/menda/Documents/DN Lab/DN-Lab/src/data/gallery.ts).
+

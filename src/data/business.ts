@@ -129,3 +129,4 @@ export function getWhatsAppUrl(message?: string): string {
   const encoded = encodeURIComponent(message || defaultMsg);
   return `https://wa.me/${businessInfo.contact.whatsapp}?text=${encoded}`;
 }
+

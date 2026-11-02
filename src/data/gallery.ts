@@ -109,3 +109,4 @@ export const galleryData: GalleryItem[] = [
     tag: "Wide Format"
   }
 ];
+
