@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" fill="none">
+  <defs>
+    <linearGradient id="dnLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284C7" />
+      <stop offset="100%" stop-color="#0369A1" />
+    </linearGradient>
+    <linearGradient id="dnBadgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Icon Emblem -->
+  <g transform="translate(10, 8)">
+    <rect width="64" height="64" rx="16" fill="url(#dnBadgeGrad)" />
+    <!-- Aperture circle -->
+    <circle cx="32" cy="32" r="22" stroke="#0284C7" stroke-width="2.5" />
+    <circle cx="32" cy="32" r="14" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-dasharray="3 3" />
+    <!-- Monogram DN -->
+    <text x="32" y="38" font-family="'Poppins', sans-serif" font-size="20" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="-0.5">DN</text>
+    <!-- CMYK Colour dots at the bottom -->
+    <circle cx="21" cy="53" r="2.5" fill="#00AEEF" />
+    <circle cx="28" cy="53" r="2.5" fill="#EC008C" />
+    <circle cx="35" cy="53" r="2.5" fill="#FFF200" />
+    <circle cx="42" cy="53" r="2.5" fill="#231F20" stroke="#FFFFFF" stroke-width="0.5" />
+  </g>
+
+  <!-- Wordmark -->
+  <g transform="translate(86, 26)">
+    <text x="0" y="0" font-family="'Poppins', sans-serif" font-size="21" font-weight="800" fill="#0F172A" letter-spacing="0.5">DN <tspan fill="#0284C7">DIGITAL</tspan></text>
+    <text x="0" y="19" font-family="'Inter', sans-serif" font-size="11.5" font-weight="700" fill="#64748B" letter-spacing="2.2">COLOUR LAB <tspan font-weight="500" fill="#94A3B8">(PVT) LTD</tspan></text>
+    <text x="0" y="35" font-family="'Inter', sans-serif" font-size="9" font-weight="500" fill="#0284C7" letter-spacing="1">PANADURA • PHOTO &amp; PRINT</text>
+  </g>
+</svg>
