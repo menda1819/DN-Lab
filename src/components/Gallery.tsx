@@ -1,223 +1,127 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { ZoomIn, X, ChevronLeft, ChevronRight, Info, Eye } from 'lucide-react';
-import { galleryData, galleryCategories, GalleryItem } from '../data/gallery';
+import React, { useState } from 'react';
 
 export const Gallery: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState<string>('all');
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [activeImage, setActiveImage] = useState<{ src: string; caption: string } | null>(null);
 
-  const filteredItems = galleryData.filter(
-    (item) => activeCategory === 'all' || item.category === activeCategory
-  );
-
-  const openLightbox = (id: string) => {
-    const idx = filteredItems.findIndex((it) => it.id === id);
-    if (idx !== -1) {
-      setLightboxIndex(idx);
-    }
+  const openLightbox = (src: string, caption: string) => {
+    setActiveImage({ src, caption });
+    document.body.style.overflow = 'hidden';
   };
 
   const closeLightbox = () => {
-    setLightboxIndex(null);
+    setActiveImage(null);
+    document.body.style.overflow = 'auto';
   };
 
-  const nextImage = useCallback(() => {
-    if (lightboxIndex !== null) {
-      setLightboxIndex((lightboxIndex + 1) % filteredItems.length);
-    }
-  }, [lightboxIndex, filteredItems.length]);
-
-  const prevImage = useCallback(() => {
-    if (lightboxIndex !== null) {
-      setLightboxIndex((lightboxIndex - 1 + filteredItems.length) % filteredItems.length);
-    }
-  }, [lightboxIndex, filteredItems.length]);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (lightboxIndex === null) return;
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowRight') nextImage();
-      if (e.key === 'ArrowLeft') prevImage();
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxIndex, nextImage, prevImage]);
-
-  const currentItem: GalleryItem | null =
-    lightboxIndex !== null ? filteredItems[lightboxIndex] : null;
-
   return (
-    <section id="gallery" className="py-20 md:py-28 bg-slate-900 text-white relative overflow-hidden">
-      {/* Background glow accents */}
-      <div className="absolute top-10 left-10 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
-          <span className="text-xs font-bold text-sky-400 uppercase tracking-widest bg-sky-950 px-3.5 py-1 rounded-full border border-sky-800">
-            Work &amp; Style Showcase
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-heading tracking-tight">
-            Photo Printing &amp; Framing Gallery
-          </h2>
-          <p className="text-base text-slate-300 leading-relaxed">
-            Explore sample finishes, frame mouldings, enlargements, and custom printing work.
+    <>
+<section className="py-16 md:py-24 bg-surface-container-lowest border-b border-outline-variant/20" id="gallery">
+<div className="max-w-7xl mx-auto px-margin md:px-margin-lg">
+<div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+<div>
+<span className="text-label-md font-label-md uppercase tracking-wider text-secondary font-semibold block mb-2">Portfolio</span>
+<h2 className="text-headline-md md:text-headline-lg font-headline-md md:font-headline-lg text-on-surface font-bold tracking-tight">
+              Our Work &amp; Print Showcase
+            </h2>
+</div>
+<p className="text-body-md font-body-md text-on-surface-variant max-w-md">
+            A sample of recent digital prints, framed memories, enlargements, and custom stickers produced at our Panadura lab.
           </p>
-        </div>
+</div>
 
-        {/* Category Filter Tabs */}
-        <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-4 mb-8 scrollbar-none">
-          {galleryCategories.map((cat) => {
-            const isSelected = activeCategory === cat.id;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer ${
-                  isSelected
-                    ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/25'
-                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white'
-                }`}
-              >
-                {cat.label}
-              </button>
-            );
-          })}
-        </div>
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredItems.map((item) => (
-            <div
-              key={item.id}
-              onClick={() => openLightbox(item.id)}
-              className="group relative rounded-2xl overflow-hidden bg-slate-800 border border-slate-700/60 shadow-lg cursor-pointer transform hover:-translate-y-1 transition-all duration-300"
-            >
-              {/* Image */}
-              <div className="relative h-72 w-full overflow-hidden">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-700"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
-              </div>
+<div className="group relative rounded-2xl overflow-hidden border border-outline-variant/30 bg-surface shadow-sm cursor-pointer" onClick={() => openLightbox("/images/wedding-prints-showcase.jpg", "Wedding Thank You Cards & Album Prints")}>
+<div className="aspect-[4/3] overflow-hidden">
+<img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Real wedding photo prints, tri-fold cards and thank-you cards printed at DN Digital Colour Lab" src="/images/wedding-prints-showcase.jpg"/>
+</div>
+<div className="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5">
+<div>
+<span className="text-label-sm font-label-sm text-primary-fixed uppercase tracking-wider">Photo Prints &amp; Albums</span>
+<h4 className="text-title-md font-title-md text-inverse-on-surface font-semibold">Wedding Thank You Cards &amp; Album Prints</h4>
+</div>
+</div>
+</div>
 
-              {/* Tag Pill */}
-              <div className="absolute top-3 left-3 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-slate-950/80 backdrop-blur-md text-sky-400 border border-slate-700">
-                {item.tag}
-              </div>
+<div className="group relative rounded-2xl overflow-hidden border border-outline-variant/30 bg-surface shadow-sm cursor-pointer" onClick={() => openLightbox("/images/lab-operator-press.jpg", "Expert Machine Operator at Xerox Press")}>
+<div className="aspect-[4/3] overflow-hidden">
+<img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Dedicated print operator running color calibration on Xerox press" src="/images/lab-operator-press.jpg"/>
+</div>
+<div className="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5">
+<div>
+<span className="text-label-sm font-label-sm text-primary-fixed uppercase tracking-wider">Lab Operation</span>
+<h4 className="text-title-md font-title-md text-inverse-on-surface font-semibold">Real-Time Digital Press Calibration</h4>
+</div>
+</div>
+</div>
 
-              {/* Zoom Hover Icon */}
-              <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-slate-900/80 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <ZoomIn className="w-4 h-4 text-sky-400" />
-              </div>
+<div className="group relative rounded-2xl overflow-hidden border border-outline-variant/30 bg-surface shadow-sm cursor-pointer" onClick={() => openLightbox("/images/offset-services-flyer.jpg", "DN Digital Offset Commercial Products")}>
+<div className="aspect-[4/3] overflow-hidden">
+<img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="DN Digital Offset commercial printing design services flyer" src="/images/offset-services-flyer.jpg"/>
+</div>
+<div className="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5">
+<div>
+<span className="text-label-sm font-label-sm text-primary-fixed uppercase tracking-wider">Commercial Offset</span>
+<h4 className="text-title-md font-title-md text-inverse-on-surface font-semibold">Corporate Stationery &amp; Marketing Collateral</h4>
+</div>
+</div>
+</div>
 
-              {/* Caption Overlay */}
-              <div className="absolute bottom-0 left-0 right-0 p-5 space-y-1">
-                <span className="text-[10px] text-slate-400 font-medium">
-                  {item.categoryLabel}
-                </span>
-                <h3 className="text-base font-bold text-white font-heading group-hover:text-sky-300 transition-colors">
-                  {item.title}
-                </h3>
-                <p className="text-xs text-slate-300 line-clamp-1 opacity-90">
-                  {item.description}
-                </p>
-                <div className="pt-1 flex items-center gap-1 text-[11px] font-semibold text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Eye className="w-3.5 h-3.5" />
-                  <span>Click to expand</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+<div className="group relative rounded-2xl overflow-hidden border border-outline-variant/30 bg-surface shadow-sm cursor-pointer" onClick={() => openLightbox("/images/xerox-production-press.jpg", "Industrial Xerox Digital Color Press")}>
+<div className="aspect-[4/3] overflow-hidden">
+<img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Industrial Xerox digital production press at Panadura facility" src="/images/xerox-production-press.jpg"/>
+</div>
+<div className="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5">
+<div>
+<span className="text-label-sm font-label-sm text-primary-fixed uppercase tracking-wider">Production Hardware</span>
+<h4 className="text-title-md font-title-md text-inverse-on-surface font-semibold">Industrial Xerox Digital Press Equipment</h4>
+</div>
+</div>
+</div>
 
-        {/* Gallery Disclaimer Note */}
-        <div className="mt-12 p-4 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center gap-3 text-xs text-slate-400 max-w-2xl mx-auto">
-          <Info className="w-4 h-4 text-sky-400 shrink-0" />
-          <span>
-            Visual style showcase. Visit our lab at 437/B2 Galle Road, Panadura to view actual photo paper textures, frame moulding samples, and completed works.
-          </span>
-        </div>
+<div className="group relative rounded-2xl overflow-hidden border border-outline-variant/30 bg-surface shadow-sm cursor-pointer" onClick={() => openLightbox("/images/dn-lab-team.jpg", "The Dedicated DN Lab Team in Panadura")}>
+<div className="aspect-[4/3] overflow-hidden">
+<img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="DN Digital Colour Lab professional team in Panadura" src="/images/dn-lab-team.jpg"/>
+</div>
+<div className="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5">
+<div>
+<span className="text-label-sm font-label-sm text-primary-fixed uppercase tracking-wider">Our Team</span>
+<h4 className="text-title-md font-title-md text-inverse-on-surface font-semibold">The Dedicated DN Lab Team in Panadura</h4>
+</div>
+</div>
+</div>
 
-      </div>
+<div className="group relative rounded-2xl overflow-hidden border border-outline-variant/30 bg-surface shadow-sm cursor-pointer" onClick={() => openLightbox("https://lh3.googleusercontent.com/aida-public/AB6AXuBq307p_j3NIzWu78FZDYvPzJb5sdLCP015rknQ3SKPOgajTAGv8fZFaUmoar0vb7f90z2PnUnAT5YsmpKF8l57og9Gvc5b5VV8GhGNKddVNzp6VuJPYioaj_bQqJk-bcrWZlEegXORJGZsASQuPKxpDfNrGZrIm22NaGJr2ME-j3ILaLQqB6Ki_Oa2x4ESvC2jw2xEExMhLvq6_mkat6AZPNL9dXNuVw6XS05obwc", "Graduation Portrait with Gold Fillet Border")}>
+<div className="aspect-[4/3] overflow-hidden">
+<img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A formal graduation photograph printed with rich deep colors and crisp skin tones, encased in a traditional deep-set wooden frame with an elegant gold inner fillet border." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBq307p_j3NIzWu78FZDYvPzJb5sdLCP015rknQ3SKPOgajTAGv8fZFaUmoar0vb7f90z2PnUnAT5YsmpKF8l57og9Gvc5b5VV8GhGNKddVNzp6VuJPYioaj_bQqJk-bcrWZlEegXORJGZsASQuPKxpDfNrGZrIm22NaGJr2ME-j3ILaLQqB6Ki_Oa2x4ESvC2jw2xEExMhLvq6_mkat6AZPNL9dXNuVw6XS05obwc"/>
+</div>
+<div className="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5">
+<div>
+<span className="text-label-sm font-label-sm text-primary-fixed uppercase tracking-wider">Framed Memories</span>
+<h4 className="text-title-md font-title-md text-inverse-on-surface font-semibold">Graduation Portrait with Gold Fillet Border</h4>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
 
-      {/* Lightbox Modal */}
-      {currentItem && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/95 backdrop-blur-md animate-fade-in"
-          onClick={closeLightbox}
-        >
-          <div
-            className="relative max-w-4xl w-full bg-slate-900 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl flex flex-col max-h-[92vh]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Top Bar with Counter and Close */}
-            <div className="p-4 bg-slate-950/80 border-b border-slate-800 flex items-center justify-between text-xs text-slate-300">
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded bg-sky-950 text-sky-400 border border-sky-800 font-semibold">
-                  {currentItem.categoryLabel}
-                </span>
-                <span>
-                  {(lightboxIndex ?? 0) + 1} of {filteredItems.length}
-                </span>
-              </div>
+<div className={`fixed inset-0 z-50 bg-inverse-surface/90 backdrop-blur-md ${activeImage ? "flex" : "hidden"} items-center justify-center p-4`} id="lightbox-modal" style={{ display: activeImage ? "flex" : "none" }} onClick={(e) => { if (e.target === e.currentTarget) closeLightbox(); }}>
+<div className="relative max-w-4xl w-full bg-surface-container-lowest rounded-2xl overflow-hidden shadow-2xl border border-outline-variant/40">
+<button className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-surface/80 hover:bg-surface flex items-center justify-center text-on-surface transition-colors" onClick={closeLightbox}>
+<span className="material-symbols-outlined">close</span>
+</button>
+<div className="p-2">
+<img alt="Gallery Preview" className="w-full max-h-[75vh] object-contain rounded-xl" id="lightbox-img" src={activeImage ? activeImage.src : ""}/>
+</div>
+<div className="p-4 border-t border-outline-variant/20 flex items-center justify-between bg-surface">
+<span className="text-title-md font-title-md font-bold text-on-surface" id="lightbox-caption">{activeImage ? activeImage.caption : ""}</span>
+<a className="text-label-sm font-label-sm text-secondary font-semibold hover:underline" href="#contact" onClick={closeLightbox}>Inquire About This Print</a>
+</div>
+</div>
+</div>
 
-              <button
-                onClick={closeLightbox}
-                className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
-                aria-label="Close lightbox"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
 
-            {/* Main Image Area with Nav Arrows */}
-            <div className="relative flex-1 bg-black flex items-center justify-center overflow-hidden min-h-[350px] sm:min-h-[480px]">
-              <img
-                src={currentItem.image}
-                alt={currentItem.title}
-                className="max-h-[65vh] w-auto max-w-full object-contain mx-auto"
-              />
-
-              {/* Prev Button */}
-              <button
-                onClick={prevImage}
-                className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-slate-900/80 hover:bg-slate-800 text-white border border-slate-700 shadow-lg transition-transform hover:scale-105"
-                aria-label="Previous image"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-
-              {/* Next Button */}
-              <button
-                onClick={nextImage}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-slate-900/80 hover:bg-slate-800 text-white border border-slate-700 shadow-lg transition-transform hover:scale-105"
-                aria-label="Next image"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Bottom Caption */}
-            <div className="p-5 bg-slate-950 border-t border-slate-800 text-left">
-              <h3 className="text-lg font-bold text-white font-heading">
-                {currentItem.title}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-400 mt-1">
-                {currentItem.description}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-    </section>
+    </>
   );
 };
-

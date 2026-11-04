@@ -1,154 +1,81 @@
 import React from 'react';
-import { Phone, MapPin, Clock, MessageCircle, ArrowUp } from 'lucide-react';
-import { Logo } from './Logo';
-import { businessInfo, getWhatsAppUrl } from '../data/business';
-import { servicesData } from '../data/services';
 
 export const Footer: React.FC = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const navLinks = [
-    { label: 'Home', href: '#home' },
-    { label: 'About Us', href: '#about' },
-    { label: 'Services', href: '#services' },
-    { label: 'Product Catalogue', href: '#products' },
-    { label: 'Photo Gallery', href: '#gallery' },
-    { label: 'Why Choose Us', href: '#why-us' },
-    { label: 'Contact Us', href: '#contact' },
-  ];
-
   return (
-    <footer className="bg-slate-950 text-slate-300 pt-16 pb-12 border-t border-slate-800 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-12 border-b border-slate-800">
-          
-          {/* Brand Info Column */}
-          <div className="lg:col-span-4 space-y-4">
-            <Logo variant="light" size="md" />
-            
-            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-sm pt-2">
-              {businessInfo.legalName} is your dedicated destination for digital photographic printing, custom photo framing, enlargements, and commercial digital printing in Panadura, Sri Lanka.
-            </p>
+<footer className="w-full bg-inverse-surface border-t border-outline-variant/20 text-inverse-on-surface">
+<div className="w-full px-margin md:px-margin-lg py-space-xl max-w-7xl mx-auto">
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
 
-            <div className="pt-2 flex items-center gap-3">
-              <a
-                href={getWhatsAppUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-500 transition-colors shadow-sm"
-              >
-                <MessageCircle className="w-3.5 h-3.5" />
-                <span>WhatsApp Us</span>
-              </a>
-
-              <a
-                href={`tel:${businessInfo.contact.phone}`}
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-200 bg-slate-900 hover:bg-slate-800 border border-slate-700 transition-colors"
-              >
-                <Phone className="w-3.5 h-3.5 text-sky-400" />
-                <span>Call Hotline</span>
-              </a>
-            </div>
+<div className="space-y-4">
+<div className="flex items-center gap-3">
+<img alt="DN Digital Colour Lab Logo" className="h-10 w-auto object-contain bg-surface-container-lowest p-1 rounded" src="/images/logo.png"/>
+<span className="text-headline-sm font-headline-sm font-bold text-inverse-on-surface tracking-tight">DN Digital Colour Lab</span>
+</div>
+<p className="text-body-sm font-body-sm text-inverse-on-surface/70 leading-relaxed">
+            Professional photographic printing, custom framing, enlargements, and digital offset production based in Panadura, Sri Lanka.
+          </p>
+<div className="text-label-sm font-label-sm text-secondary-fixed">
+            437/B2, Galle Road, Panadura 12500
           </div>
+</div>
 
-          {/* Quick Navigation Links */}
-          <div className="lg:col-span-2 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
-              Navigation
-            </h4>
-            <ul className="space-y-2 text-xs">
-              {navLinks.map((link, idx) => (
-                <li key={idx}>
-                  <a
-                    href={link.href}
-                    className="text-slate-400 hover:text-sky-400 transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+<div>
+<h4 className="text-title-md font-title-md font-bold text-inverse-on-surface mb-4">Our Services</h4>
+<ul className="space-y-2 text-body-sm font-body-sm">
+<li><a className="text-inverse-on-surface/70 hover:text-inverse-on-surface transition-colors" href="#services">Digital Photo Printing</a></li>
+<li><a className="text-inverse-on-surface/70 hover:text-inverse-on-surface transition-colors" href="#services">Large Format Framing</a></li>
+<li><a className="text-inverse-on-surface/70 hover:text-inverse-on-surface transition-colors" href="#services">Custom Stickers</a></li>
+<li><a className="text-inverse-on-surface/70 hover:text-inverse-on-surface transition-colors" href="#products">Price Inquiry</a></li>
+<li><a className="text-inverse-on-surface/70 hover:text-inverse-on-surface transition-colors" href="#about">Lab Equipment</a></li>
+</ul>
+</div>
 
-          {/* Services Links */}
-          <div className="lg:col-span-3 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
-              Printing Services
-            </h4>
-            <ul className="space-y-2 text-xs">
-              {servicesData.map((svc) => (
-                <li key={svc.id}>
-                  <a
-                    href="#services"
-                    className="text-slate-400 hover:text-sky-400 transition-colors line-clamp-1"
-                  >
-                    {svc.title}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+<div>
+<h4 className="text-title-md font-title-md font-bold text-inverse-on-surface mb-4">Direct Contact</h4>
+<ul className="space-y-2 text-body-sm font-body-sm text-inverse-on-surface/70">
+<li className="flex items-center gap-2">
+<span className="material-symbols-outlined text-base text-secondary-fixed">call</span>
+<a className="hover:underline text-inverse-on-surface" href="tel:+94777312167">+94 77 731 2167</a>
+</li>
+<li className="flex items-center gap-2">
+<span className="material-symbols-outlined text-base text-primary-fixed">chat</span>
+<a className="hover:underline text-inverse-on-surface" href="https://wa.me/94777312167" target="_blank">WhatsApp Chat</a>
+</li>
+<li className="flex items-center gap-2">
+<span className="material-symbols-outlined text-base text-secondary-fixed">schedule</span>
+<span>Mon – Sat: 8:30 AM – 6:00 PM</span>
+</li>
+<li className="flex items-center gap-2">
+<span className="material-symbols-outlined text-base text-tertiary-fixed">block</span>
+<span>Sunday: Closed</span>
+</li>
+</ul>
+</div>
 
-          {/* Business & Hours Column */}
-          <div className="lg:col-span-3 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
-              Visit or Contact
-            </h4>
-            <div className="space-y-3 text-xs text-slate-400">
-              <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-                <span>{businessInfo.address.formatted}</span>
-              </div>
+<div>
+<h4 className="text-title-md font-title-md font-bold text-inverse-on-surface mb-4">Digital Precision</h4>
+<p className="text-body-sm font-body-sm text-inverse-on-surface/70 leading-relaxed mb-4">
+            Utilizing Xerox industrial digital press architecture for continuous tone photographic fidelity and durable color reproduction.
+          </p>
+<div className="flex items-center gap-2">
+<span className="w-3 h-3 rounded-full bg-[#00a4e4]"></span>
+<span className="w-3 h-3 rounded-full bg-[#e11d48]"></span>
+<span className="w-3 h-3 rounded-full bg-[#facc15]"></span>
+<span className="w-3 h-3 rounded-full bg-[#1e293b]"></span>
+<span className="w-3 h-3 rounded-full bg-[#7cb342]"></span>
+<span className="text-label-sm font-label-sm text-inverse-on-surface/60 ml-2">CMYK Calibrated</span>
+</div>
+</div>
+</div>
 
-              <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-sky-400 shrink-0" />
-                <a
-                  href={`tel:${businessInfo.contact.phone}`}
-                  className="hover:text-white transition-colors"
-                >
-                  {businessInfo.contact.phoneDisplay}
-                </a>
-              </div>
-
-              <div className="flex items-start gap-2.5">
-                <Clock className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-slate-300 font-medium">{businessInfo.hours.days}</p>
-                  <p className="text-slate-500">{businessInfo.hours.sunday}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Bottom Bar: Copyright & Back to Top */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <div>
-            &copy; {new Date().getFullYear()} {businessInfo.legalName}. All rights reserved.
-          </div>
-
-          <div className="flex items-center gap-6">
-            <span>Photo Lab &amp; Digital Printing &bull; Panadura, Sri Lanka</span>
-            
-            <button
-              onClick={scrollToTop}
-              className="p-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white transition-colors flex items-center gap-1 focus:outline-none"
-              title="Back to Top"
-              aria-label="Scroll to top of page"
-            >
-              <ArrowUp className="w-3.5 h-3.5" />
-              <span className="text-[11px]">Top</span>
-            </button>
-          </div>
-        </div>
-
-      </div>
-    </footer>
+<div className="pt-8 border-t border-outline-variant/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-label-sm font-label-sm text-inverse-on-surface/60">
+<p>© 2024 DN Digital Colour Lab (Pvt) Ltd. Panadura, Sri Lanka. All rights reserved.</p>
+<div className="flex items-center gap-6">
+<a className="hover:text-primary-fixed transition-colors" href="#about">Panadura Location</a>
+<a className="hover:text-primary-fixed transition-colors" href="#services">Terms &amp; Policies</a>
+</div>
+</div>
+</div>
+</footer>
   );
 };
-
