@@ -103,3 +103,4 @@ export interface WebsiteContent {
   gallery: GalleryContent;
   lastUpdated: string;
 }
+
