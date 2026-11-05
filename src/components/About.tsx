@@ -1,165 +1,144 @@
 import React from 'react';
-import { Camera, Layers, Frame, MapPin, Award, CheckCircle } from 'lucide-react';
-import { businessInfo } from '../data/business';
 
 export const About: React.FC = () => {
-  const highlights = [
-    {
-      icon: Camera,
-      title: "True-Color Photo Printing",
-      description: "Dedicated photographic printing using genuine photo papers and calibrated color management for skin tones and vivid scenery."
-    },
-    {
-      icon: Frame,
-      title: "Custom Framing & Finishing",
-      description: "Comprehensive framing solutions with a variety of moulding styles, protective glass, and acid-free mounting under one roof."
-    },
-    {
-      icon: Layers,
-      title: "Digital & Sticker Printing",
-      description: "Versatile digital printing capabilities for custom brand stickers, commercial documents, certificates, and marketing leaflets."
-    },
-    {
-      icon: MapPin,
-      title: "Convenient Galle Road Location",
-      description: "Centrally situated at 437/B2, Galle Road in Panadura, providing easy access and parking for local residents and businesses."
-    }
-  ];
-
   return (
-    <section id="about" className="py-20 md:py-28 bg-white relative overflow-hidden">
-      {/* Decorative background shape */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-sky-50 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          
-          {/* Left Column: Visual Showcase Grid */}
-          <div className="lg:col-span-5 order-2 lg:order-1">
-            <div className="relative">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-4">
-                  <div className="rounded-2xl overflow-hidden shadow-card border border-slate-100 h-48 sm:h-56">
-                    <img
-                      src="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?auto=format&fit=crop&w=600&q=80"
-                      alt="Digital Photo Lab Printing"
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="rounded-2xl overflow-hidden shadow-card border border-slate-100 h-60 sm:h-72">
-                    <img
-                      src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=600&q=80"
-                      alt="Custom Photo Framing"
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                </div>
+<section className="py-16 md:py-24 bg-surface border-b border-outline-variant/20 relative overflow-hidden" id="about">
+  {/* Clearly Visible Xerox Equipment Background */}
+  <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+    <img 
+      src="/images/xerox-production-press.jpg" 
+      alt="Xerox digital production press at DN Digital Colour Lab" 
+      className="absolute right-0 top-0 w-full lg:w-3/5 h-full object-cover object-right opacity-65"
+    />
+    <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/85 to-surface/40" />
+    <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-surface to-transparent" />
+  </div>
 
-                <div className="space-y-4 pt-6">
-                  <div className="rounded-2xl overflow-hidden shadow-card border border-slate-100 h-60 sm:h-72">
-                    <img
-                      src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=600&q=80"
-                      alt="Photo Enlargement Output"
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="rounded-2xl overflow-hidden shadow-card border border-slate-100 h-48 sm:h-56">
-                    <img
-                      src="https://images.unsplash.com/photo-1572375992501-4b0892d50c69?auto=format&fit=crop&w=600&q=80"
-                      alt="Custom Sticker Printing"
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                </div>
-              </div>
+<div className="relative z-10 max-w-7xl mx-auto px-margin md:px-margin-lg">
+<div className="max-w-3xl mb-12">
+<span className="text-label-md font-label-md uppercase tracking-wider text-primary font-semibold block mb-2">About DN Digital Colour Lab</span>
+<h2 className="text-headline-md md:text-headline-lg font-headline-md md:font-headline-lg text-on-surface font-bold tracking-tight">
+            Trusted Digital Photo Printing &amp; Offset Lab in Panadura
+          </h2>
+<p className="text-body-lg font-body-lg text-on-surface-variant mt-4 leading-relaxed">
+            Situated centrally at <strong>437/B2, Galle Road, Panadura</strong>, DN Digital Colour Lab (Pvt) Ltd delivers industrial color grading, photo enlargement, custom framed memorabilia, and multi-format commercial printing for families, studios, and businesses across the Western Province.
+          </p>
+</div>
 
-              {/* Central badge */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-2xl bg-slate-900 text-white shadow-2xl border border-slate-700 text-center">
-                <Award className="w-6 h-6 text-amber-400 mx-auto mb-1" />
-                <p className="text-xs font-bold uppercase tracking-wider text-sky-400">DN Digital Lab</p>
-                <p className="text-[11px] text-slate-300 font-medium">Panadura, Sri Lanka</p>
-              </div>
-            </div>
-          </div>
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
-          {/* Right Column: About Content */}
-          <div className="lg:col-span-7 order-1 lg:order-2 space-y-6">
-            <div className="space-y-2">
-              <span className="text-xs font-bold text-sky-600 uppercase tracking-widest bg-sky-50 px-3 py-1 rounded-full border border-sky-100">
-                Local Photo Lab &amp; Digital Printing
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 font-heading tracking-tight">
-                About DN Digital Colour Lab
-              </h2>
-            </div>
+<div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-sm overflow-hidden flex flex-col justify-between hover:border-secondary transition-colors group">
+<div className="relative h-44 overflow-hidden bg-surface-container">
+  <img 
+    src="/images/wedding-prints-showcase.jpg" 
+    alt="High precision wedding photo prints and tri-fold album cards" 
+    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+  />
+  <div className="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur-md px-2.5 py-1 rounded text-label-sm font-label-sm font-semibold text-secondary">
+    Archival Media
+  </div>
+</div>
+<div className="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div className="w-10 h-10 rounded-xl bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center mb-4">
+<span className="material-symbols-outlined text-xl">photo_camera</span>
+</div>
+<h3 className="text-title-lg font-title-lg font-bold text-on-surface mb-2">High Precision Digital Photo Printing</h3>
+<p className="text-body-sm font-body-sm text-on-surface-variant leading-relaxed">
+  Archival papers, glossy, lustre, and metallic photo finishes engineered to safeguard visual clarity for years.
+</p>
+</div>
+<div className="mt-5 pt-3 border-t border-outline-variant/20 flex items-center text-label-sm font-label-sm text-secondary font-semibold">
+<span>RGB to Print Precision</span>
+</div>
+</div>
+</div>
 
-            <p className="text-base text-slate-600 leading-relaxed">
-              Located on Galle Road in Panadura, <strong className="text-slate-900 font-semibold">{businessInfo.legalName}</strong> is your local destination for premium photographic printing, custom framing, and professional digital printing services.
-            </p>
+<div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-sm overflow-hidden flex flex-col justify-between hover:border-primary transition-colors group">
+<div className="relative h-44 overflow-hidden bg-surface-container">
+  <img 
+    src="/images/xerox-production-press.jpg" 
+    alt="Xerox digital production color press at DN Digital Colour Lab" 
+    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+  />
+  <div className="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur-md px-2.5 py-1 rounded text-label-sm font-label-sm font-semibold text-primary">
+    Production Press
+  </div>
+</div>
+<div className="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div className="w-10 h-10 rounded-xl bg-primary-fixed text-on-primary-fixed flex items-center justify-center mb-4">
+<span className="material-symbols-outlined text-xl">print</span>
+</div>
+<h3 className="text-title-lg font-title-lg font-bold text-on-surface mb-2">Xerox Digital Production Press</h3>
+<p className="text-body-sm font-body-sm text-on-surface-variant leading-relaxed">
+  Industrial hardware ensuring razor-sharp registration, consistent halftone density, and swift turnaround time.
+</p>
+</div>
+<div className="mt-5 pt-3 border-t border-outline-variant/20 flex items-center text-label-sm font-label-sm text-primary font-semibold">
+<span>Lab-Grade Technology</span>
+</div>
+</div>
+</div>
 
-            <p className="text-base text-slate-600 leading-relaxed">
-              We specialize in bringing visual moments to life. Whether you need crisp digital photo prints for family albums, large-format enlargements for your living room wall, handcrafted custom frames, custom brand stickers, or urgent document prints, we combine photographic attention to detail with dependable turnaround.
-            </p>
+<div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-sm overflow-hidden flex flex-col justify-between hover:border-tertiary transition-colors group">
+<div className="relative h-44 overflow-hidden bg-surface-container">
+  <img 
+    src="/images/lab-operator-press.jpg" 
+    alt="Dedicated print operator running color calibration on Xerox press" 
+    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+  />
+  <div className="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur-md px-2.5 py-1 rounded text-label-sm font-label-sm font-semibold text-tertiary">
+    In-House Tech
+  </div>
+</div>
+<div className="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div className="w-10 h-10 rounded-xl bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center mb-4">
+<span className="material-symbols-outlined text-xl">engineering</span>
+</div>
+<h3 className="text-title-lg font-title-lg font-bold text-on-surface mb-2">Expert Machine Operation</h3>
+<p className="text-body-sm font-body-sm text-on-surface-variant leading-relaxed">
+  Meticulously operated by seasoned print technicians for optimal density, tone gradation, and registration accuracy.
+</p>
+</div>
+<div className="mt-5 pt-3 border-t border-outline-variant/20 flex items-center text-label-sm font-label-sm text-tertiary font-semibold">
+<span>Skilled Craftsmanship</span>
+</div>
+</div>
+</div>
 
-            {/* Inclusions checklist */}
-            <div className="grid sm:grid-cols-2 gap-3 pt-2">
-              <div className="flex items-start gap-2.5">
-                <CheckCircle className="w-4 h-4 text-sky-600 mt-1 shrink-0" />
-                <span className="text-sm font-medium text-slate-700">Dedicated photo papers &amp; genuine inks</span>
-              </div>
-              <div className="flex items-start gap-2.5">
-                <CheckCircle className="w-4 h-4 text-sky-600 mt-1 shrink-0" />
-                <span className="text-sm font-medium text-slate-700">Custom moulding frame assembly</span>
-              </div>
-              <div className="flex items-start gap-2.5">
-                <CheckCircle className="w-4 h-4 text-sky-600 mt-1 shrink-0" />
-                <span className="text-sm font-medium text-slate-700">Convenient location with easy Galle Road access</span>
-              </div>
-              <div className="flex items-start gap-2.5">
-                <CheckCircle className="w-4 h-4 text-sky-600 mt-1 shrink-0" />
-                <span className="text-sm font-medium text-slate-700">Prompt turnaround for urgent printing tasks</span>
-              </div>
-            </div>
+<div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-sm overflow-hidden flex flex-col justify-between hover:border-secondary transition-colors group">
+<div className="relative h-44 overflow-hidden bg-surface-container">
+  <img 
+    src="/images/offset-services-flyer.jpg" 
+    alt="DN Digital Offset commercial printing services promotional flyer" 
+    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+  />
+  <div className="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur-md px-2.5 py-1 rounded text-label-sm font-label-sm font-semibold text-secondary">
+    All-In-One
+  </div>
+</div>
+<div className="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div className="w-10 h-10 rounded-xl bg-secondary-container/20 text-secondary flex items-center justify-center mb-4">
+<span className="material-symbols-outlined text-xl">loyalty</span>
+</div>
+<h3 className="text-title-lg font-title-lg font-bold text-on-surface mb-2">Offset &amp; Custom Collateral</h3>
+<p className="text-body-sm font-body-sm text-on-surface-variant leading-relaxed">
+  Suppliers essentials, corporate stationery, leaflets, posters, wire-bound books, and custom stickers in any run.
+</p>
+</div>
+<div className="mt-5 pt-3 border-t border-outline-variant/20 flex items-center text-label-sm font-label-sm text-secondary font-semibold">
+<span>Commercial Variety</span>
+</div>
+</div>
+</div>
 
-            {/* Feature Cards Grid */}
-            <div className="grid sm:grid-cols-2 gap-4 pt-4 border-t border-slate-100">
-              {highlights.map((item, index) => {
-                const IconComponent = item.icon;
-                return (
-                  <div
-                    key={index}
-                    className="p-4 rounded-xl bg-slate-50 hover:bg-sky-50/50 border border-slate-100 transition-colors"
-                  >
-                    <div className="w-9 h-9 rounded-lg bg-white shadow-xs border border-slate-200/60 flex items-center justify-center text-sky-600 mb-2.5">
-                      <IconComponent className="w-4 h-4" />
-                    </div>
-                    <h3 className="text-sm font-bold text-slate-900 mb-1">
-                      {item.title}
-                    </h3>
-                    <p className="text-xs text-slate-500 leading-normal">
-                      {item.description}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
+</div>
+</div>
+</section>
 
-            {/* Quick Action */}
-            <div className="pt-2 flex items-center gap-4">
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-sky-600 hover:text-sky-700"
-              >
-                <span>Visit our lab on Galle Road</span>
-                <span>→</span>
-              </a>
-            </div>
 
-          </div>
-
-        </div>
-      </div>
-    </section>
   );
 };
-

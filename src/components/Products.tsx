@@ -1,262 +1,240 @@
-import React, { useState, useMemo } from 'react';
-import { Search, MessageCircle, HelpCircle, Phone, Sparkles, Filter } from 'lucide-react';
-import { productsData, productCategories, ProductItem } from '../data/products';
-import { getWhatsAppUrl, businessInfo } from '../data/business';
+import React, { useState } from 'react';
 
 export const Products: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const filteredProducts = useMemo(() => {
-    return productsData.filter((product) => {
-      const matchesCategory =
-        selectedCategory === 'all' || product.category === selectedCategory;
-      const matchesSearch =
-        searchQuery.trim() === '' ||
-        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.sizes.some((s) => s.toLowerCase().includes(searchQuery.toLowerCase()));
-
-      return matchesCategory && matchesSearch;
-    });
-  }, [selectedCategory, searchQuery]);
+  const tabs = [
+    { id: 'all', label: 'All Items' },
+    { id: 'prints', label: 'Photo Prints' },
+    { id: 'enlargements', label: 'Enlargements' },
+    { id: 'frames', label: 'Photo Frames' },
+    { id: 'stickers', label: 'Custom Stickers' },
+    { id: 'commercial', label: 'Other Printing' },
+  ];
 
   return (
-    <section id="products" className="py-20 md:py-28 bg-white relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
-          <span className="text-xs font-bold text-sky-600 uppercase tracking-widest bg-sky-50 px-3.5 py-1 rounded-full border border-sky-100">
-            Product Catalogue &amp; Pricing
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 font-heading tracking-tight">
-            Explore Available Products &amp; Sizes
+<section className="py-16 md:py-24 bg-surface border-b border-outline-variant/20" id="products">
+<div className="max-w-7xl mx-auto px-margin md:px-margin-lg">
+<div className="max-w-3xl mb-8">
+<span className="text-label-md font-label-md uppercase tracking-wider text-primary font-semibold block mb-2">Catalog &amp; Pricing</span>
+<h2 className="text-headline-md md:text-headline-lg font-headline-md md:font-headline-lg text-on-surface font-bold tracking-tight">
+            Product Catalogue &amp; Price Guide
           </h2>
-          <p className="text-base text-slate-600 leading-relaxed">
-            Browse our standard catalogue options. For confirmed rates and custom sizes, reach out to our Panadura team via WhatsApp or telephone.
+<p className="text-body-lg font-body-lg text-on-surface-variant mt-2">
+            Clear, transparent pricing on standard formats. For custom dimensions or bulk inquiries, please contact us.
           </p>
-        </div>
+</div>
 
-        {/* Filter and Search Bar Controls */}
-        <div className="mb-10 space-y-4">
-          {/* Search Box */}
-          <div className="max-w-md mx-auto relative">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by product name or size (e.g. 4R, Frame, Sticker, A4)..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl text-sm bg-slate-50 border border-slate-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all shadow-xs"
-            />
-            {searchQuery && (
+<div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar">
+          {tabs.map((tab) => {
+            const isActive = selectedCategory === tab.id;
+            return (
               <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400 hover:text-slate-600"
+                key={tab.id}
+                id={`tab-${tab.id}`}
+                onClick={() => setSelectedCategory(tab.id)}
+                className={`catalog-tab px-4 py-2 rounded-full text-label-md font-label-md transition-all whitespace-nowrap cursor-pointer ${
+                  isActive
+                    ? "bg-secondary text-on-secondary"
+                    : "bg-surface-container text-on-surface-variant hover:bg-surface-container-high"
+                }`}
               >
-                Clear
+                {tab.label}
               </button>
-            )}
-          </div>
-
-          {/* Category Filter Pills */}
-          <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-none px-1">
-            {productCategories.map((cat) => {
-              const isSelected = selectedCategory === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer ${
-                    isSelected
-                      ? 'bg-slate-900 text-white shadow-md'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
-                  }`}
-                >
-                  {cat.label}
-                </button>
-              );
-            })}
-          </div>
+            );
+          })}
         </div>
 
-        {/* Pricing Transparency Banner */}
-        <div className="mb-10 p-4 rounded-xl bg-sky-50/70 border border-sky-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-sky-900">
-          <div className="flex items-center gap-2.5">
-            <Sparkles className="w-4 h-4 text-sky-600 shrink-0" />
-            <span>
-              <strong>Verified Pricing Policy:</strong> Unconfirmed prices display <em>“Contact us for pricing”</em> rather than estimated amounts. Our team confirms exact costs tailored to your quantity and paper/moulding stock.
-            </span>
-          </div>
-          <a
-            href={getWhatsAppUrl("Hello DN Digital Colour Lab, could you please provide a price list for photo prints and frames?")}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="shrink-0 font-semibold text-sky-700 hover:text-sky-900 underline underline-offset-2"
-          >
-            Request Official Price List →
-          </a>
-        </div>
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="catalog-grid">
 
-        {/* Products Grid */}
-        {filteredProducts.length === 0 ? (
-          <div className="text-center py-16 bg-slate-50 rounded-2xl border border-slate-200">
-            <Filter className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-            <p className="text-slate-700 font-semibold text-base">No matching products found</p>
-            <p className="text-slate-500 text-xs mt-1">Try clearing your search query or selecting a different category.</p>
-            <button
-              onClick={() => { setSelectedCategory('all'); setSearchQuery(''); }}
-              className="mt-4 px-4 py-2 text-xs font-semibold rounded-lg bg-sky-600 text-white"
-            >
-              Reset Filters
-            </button>
-          </div>
-        ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
-            {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        )}
+<div className={`catalog-card bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/30 flex flex-col justify-between ${selectedCategory === "all" || selectedCategory === "prints" ? "" : "hidden"}`} data-category="prints">
+<div>
+<div className="flex items-center justify-between mb-3">
+<span className="text-label-sm font-label-sm text-secondary bg-secondary-fixed/50 px-2 py-0.5 rounded">Standard Print</span>
+<span className="material-symbols-outlined text-outline text-lg">photo_size_select_actual</span>
+</div>
+<h3 className="text-title-lg font-title-lg font-bold text-on-surface">4R (4x6) Studio Glossy Print</h3>
+<p className="text-body-sm font-body-sm text-on-surface-variant mt-2">
+                High-gloss premium paper with vivid color saturation. Ideal for family albums and portfolio sets.
+              </p>
+</div>
+<div className="mt-6 pt-4 border-t border-outline-variant/20">
+<div className="text-headline-sm font-headline-sm font-bold text-primary">LKR 65 <span className="text-body-sm font-body-sm text-outline font-normal">/ print</span></div>
+<a className="mt-3 block text-center w-full py-2 bg-surface-container hover:bg-surface-container-high text-on-surface rounded-lg text-label-sm font-label-sm font-semibold transition-colors" href="https://wa.me/94777312167?text=Hi%2C%20I%20would%20like%20to%20order%204R%20photo%20prints" target="_blank">
+                Order via WhatsApp
+              </a>
+</div>
+</div>
 
-        {/* Custom Order Callout Footer */}
-        <div className="mt-14 p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
-          <div className="space-y-1.5 text-center md:text-left">
-            <span className="text-xs font-bold uppercase tracking-wider text-sky-400">
-              Need a Custom Size or Large Batch?
-            </span>
-            <h3 className="text-xl sm:text-2xl font-bold font-heading">
-              Have specific framing or printing dimensions?
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
-              We handle non-standard frame cuts, custom sticker contour cutting, and bulk album or corporate orders.
-            </p>
-          </div>
+<div className={`catalog-card bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/30 flex flex-col justify-between ${selectedCategory === "all" || selectedCategory === "prints" ? "" : "hidden"}`} data-category="prints">
+<div>
+<div className="flex items-center justify-between mb-3">
+<span className="text-label-sm font-label-sm text-secondary bg-secondary-fixed/50 px-2 py-0.5 rounded">Portrait Spec</span>
+<span className="material-symbols-outlined text-outline text-lg">portrait</span>
+</div>
+<h3 className="text-title-lg font-title-lg font-bold text-on-surface">5R (5x7) Premium Portrait Print</h3>
+<p className="text-body-sm font-body-sm text-on-surface-variant mt-2">
+                Crisp skin tones and shadow gradation on heavy photo stock. Popular for school and desk portraits.
+              </p>
+</div>
+<div className="mt-6 pt-4 border-t border-outline-variant/20">
+<div className="text-headline-sm font-headline-sm font-bold text-primary">LKR 140 <span className="text-body-sm font-body-sm text-outline font-normal">/ print</span></div>
+<a className="mt-3 block text-center w-full py-2 bg-surface-container hover:bg-surface-container-high text-on-surface rounded-lg text-label-sm font-label-sm font-semibold transition-colors" href="https://wa.me/94777312167?text=Hi%2C%20I%20would%20like%20to%20order%205R%20photo%20prints" target="_blank">
+                Order via WhatsApp
+              </a>
+</div>
+</div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto shrink-0">
-            <a
-              href={`tel:${businessInfo.contact.phone}`}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-xs font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-colors"
-            >
-              <Phone className="w-4 h-4 text-sky-400" />
-              <span>Call Lab</span>
-            </a>
-            <a
-              href={getWhatsAppUrl("Hello DN Digital Colour Lab, I have a custom printing / framing size inquiry.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-500 transition-colors shadow-md shadow-emerald-900/30"
-            >
-              <MessageCircle className="w-4 h-4" />
-              <span>Inquire via WhatsApp</span>
-            </a>
-          </div>
-        </div>
+<div className={`catalog-card bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/30 flex flex-col justify-between ${selectedCategory === "all" || selectedCategory === "enlargements" ? "" : "hidden"}`} data-category="enlargements">
+<div>
+<div className="flex items-center justify-between mb-3">
+<span className="text-label-sm font-label-sm text-primary bg-primary-fixed/50 px-2 py-0.5 rounded">Enlargement</span>
+<span className="material-symbols-outlined text-outline text-lg">aspect_ratio</span>
+</div>
+<h3 className="text-title-lg font-title-lg font-bold text-on-surface">8R (8x10) Enlargement</h3>
+<p className="text-body-sm font-body-sm text-on-surface-variant mt-2">
+                Detailed studio enlargement, calibrated for graduation, studio headshots, and event keepsakes.
+              </p>
+</div>
+<div className="mt-6 pt-4 border-t border-outline-variant/20">
+<div className="text-headline-sm font-headline-sm font-bold text-primary">LKR 380 <span className="text-body-sm font-body-sm text-outline font-normal">/ print</span></div>
+<a className="mt-3 block text-center w-full py-2 bg-surface-container hover:bg-surface-container-high text-on-surface rounded-lg text-label-sm font-label-sm font-semibold transition-colors" href="https://wa.me/94777312167?text=Hi%2C%20I%20would%20like%20to%20order%208R%20enlargement" target="_blank">
+                Order via WhatsApp
+              </a>
+</div>
+</div>
 
-      </div>
-    </section>
-  );
-};
+<div className={`catalog-card bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/30 flex flex-col justify-between ${selectedCategory === "all" || selectedCategory === "enlargements" ? "" : "hidden"}`} data-category="enlargements">
+<div>
+<div className="flex items-center justify-between mb-3">
+<span className="text-label-sm font-label-sm text-primary bg-primary-fixed/50 px-2 py-0.5 rounded">Gallery Poster</span>
+<span className="material-symbols-outlined text-outline text-lg">panorama</span>
+</div>
+<h3 className="text-title-lg font-title-lg font-bold text-on-surface">10R / 12x18 Studio Enlargement</h3>
+<p className="text-body-sm font-body-sm text-on-surface-variant mt-2">
+                High-density digital press output designed for prominent wall displays and celebration banners.
+              </p>
+</div>
+<div className="mt-6 pt-4 border-t border-outline-variant/20">
+<div className="text-headline-sm font-headline-sm font-bold text-primary">LKR 750 <span className="text-body-sm font-body-sm text-outline font-normal">/ print</span></div>
+<a className="mt-3 block text-center w-full py-2 bg-surface-container hover:bg-surface-container-high text-on-surface rounded-lg text-label-sm font-label-sm font-semibold transition-colors" href="https://wa.me/94777312167?text=Hi%2C%20I%20would%20like%20to%20order%2012x18%20enlargement" target="_blank">
+                Order via WhatsApp
+              </a>
+</div>
+</div>
 
-interface ProductCardProps {
-  product: ProductItem;
-}
+<div className={`catalog-card bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/30 flex flex-col justify-between ${selectedCategory === "all" || selectedCategory === "frames" ? "" : "hidden"}`} data-category="frames">
+<div>
+<div className="flex items-center justify-between mb-3">
+<span className="text-label-sm font-label-sm text-tertiary bg-tertiary-fixed/50 px-2 py-0.5 rounded">Frame Package</span>
+<span className="material-symbols-outlined text-outline text-lg">frame_inspect</span>
+</div>
+<h3 className="text-title-lg font-title-lg font-bold text-on-surface">12x18 Custom Wooden Framed Photo</h3>
+<p className="text-body-sm font-body-sm text-on-surface-variant mt-2">
+                Full package including high-res print, glass protection, backed board, and ready-to-hang wooden border.
+              </p>
+</div>
+<div className="mt-6 pt-4 border-t border-outline-variant/20">
+<div className="text-headline-sm font-headline-sm font-bold text-primary">LKR 2,400 <span className="text-body-sm font-body-sm text-outline font-normal">/ package</span></div>
+<a className="mt-3 block text-center w-full py-2 bg-surface-container hover:bg-surface-container-high text-on-surface rounded-lg text-label-sm font-label-sm font-semibold transition-colors" href="https://wa.me/94777312167?text=Hi%2C%20I%20would%20like%20to%20order%2012x18%20framed%20package" target="_blank">
+                Order via WhatsApp
+              </a>
+</div>
+</div>
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  return (
-    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-card transition-all duration-300 flex flex-col justify-between group">
-      <div>
-        {/* Product Image */}
-        <div className="relative h-48 w-full overflow-hidden bg-slate-100">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-transparent to-transparent opacity-60" />
+<div className={`catalog-card bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/30 flex flex-col justify-between ${selectedCategory === "all" || selectedCategory === "frames" ? "" : "hidden"}`} data-category="frames">
+<div>
+<div className="flex items-center justify-between mb-3">
+<span className="text-label-sm font-label-sm text-tertiary bg-tertiary-fixed/50 px-2 py-0.5 rounded">Luxury Showcase</span>
+<span className="material-symbols-outlined text-outline text-lg">wallpaper</span>
+</div>
+<h3 className="text-title-lg font-title-lg font-bold text-on-surface">16x24 Luxury Wall Frame &amp; Print</h3>
+<p className="text-body-sm font-body-sm text-on-surface-variant mt-2">
+                Prestigious presentation with wider synthetic or timber moulding, UV non-reflective glass option, and hanging wire.
+              </p>
+</div>
+<div className="mt-6 pt-4 border-t border-outline-variant/20">
+<div className="text-headline-sm font-headline-sm font-bold text-primary">LKR 4,800 <span className="text-body-sm font-body-sm text-outline font-normal">/ package</span></div>
+<a className="mt-3 block text-center w-full py-2 bg-surface-container hover:bg-surface-container-high text-on-surface rounded-lg text-label-sm font-label-sm font-semibold transition-colors" href="https://wa.me/94777312167?text=Hi%2C%20I%20would%20like%20to%20order%2016x24%20luxury%20frame" target="_blank">
+                Order via WhatsApp
+              </a>
+</div>
+</div>
 
-          {/* Badge */}
-          {product.badge && (
-            <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide bg-sky-600 text-white shadow-sm">
-              {product.badge}
-            </span>
-          )}
+<div className={`catalog-card bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/30 flex flex-col justify-between ${selectedCategory === "all" || selectedCategory === "stickers" ? "" : "hidden"}`} data-category="stickers">
+<div>
+<div className="flex items-center justify-between mb-3">
+<span className="text-label-sm font-label-sm text-secondary bg-secondary-fixed/50 px-2 py-0.5 rounded">Vinyl Decal</span>
+<span className="material-symbols-outlined text-outline text-lg">cloud_download</span>
+</div>
+<h3 className="text-title-lg font-title-lg font-bold text-on-surface">Custom Die-Cut Vinyl Stickers (A4 Sheet)</h3>
+<p className="text-body-sm font-body-sm text-on-surface-variant mt-2">
+                Water-resistant, peel-and-stick labels with sharp contour cutting. Multiple logos per sheet accepted.
+              </p>
+</div>
+<div className="mt-6 pt-4 border-t border-outline-variant/20">
+<div className="text-headline-sm font-headline-sm font-bold text-primary">LKR 350 <span className="text-body-sm font-body-sm text-outline font-normal">/ sheet</span></div>
+<a className="mt-3 block text-center w-full py-2 bg-surface-container hover:bg-surface-container-high text-on-surface rounded-lg text-label-sm font-label-sm font-semibold transition-colors" href="https://wa.me/94777312167?text=Hi%2C%20I%20would%20like%20to%20order%20A4%20custom%20stickers" target="_blank">
+                Order via WhatsApp
+              </a>
+</div>
+</div>
 
-          {/* Category Tag */}
-          <span className="absolute bottom-2.5 left-3 px-2 py-0.5 rounded text-[10px] font-medium bg-slate-900/80 backdrop-blur-md text-slate-200 border border-slate-700">
-            {product.categoryLabel}
-          </span>
-        </div>
+<div className={`catalog-card bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/30 flex flex-col justify-between ${selectedCategory === "all" || selectedCategory === "commercial" ? "" : "hidden"}`} data-category="commercial">
+<div>
+<div className="flex items-center justify-between mb-3">
+<span className="text-label-sm font-label-sm text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">Custom Quotes</span>
+<span className="material-symbols-outlined text-outline text-lg">tune</span>
+</div>
+<h3 className="text-title-lg font-title-lg font-bold text-on-surface">Custom Sizes &amp; Bulk Orders</h3>
+<p className="text-body-sm font-body-sm text-on-surface-variant mt-2">
+                Have specific album specifications, non-standard dimensions, or commercial volume quantities?
+              </p>
+</div>
+<div className="mt-6 pt-4 border-t border-outline-variant/20">
+<div className="text-headline-sm font-headline-sm font-bold text-secondary">Contact Us <span className="text-body-sm font-body-sm text-outline font-normal">for pricing</span></div>
+<a className="mt-3 block text-center w-full py-2 bg-secondary text-on-secondary rounded-lg text-label-sm font-label-sm font-semibold hover:brightness-110 transition-all" href="tel:+94777312167">
+                Call for Quote
+              </a>
+</div>
+</div>
+</div>
 
-        {/* Content Body */}
-        <div className="p-5 space-y-3">
-          <div>
-            <h3 className="text-base font-bold text-slate-900 font-heading group-hover:text-sky-600 transition-colors">
-              {product.name}
-            </h3>
-            <p className="text-xs text-slate-600 leading-relaxed mt-1 line-clamp-2">
-              {product.description}
-            </p>
-          </div>
-
-          {/* Available Sizes Pills */}
-          <div>
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
-              Available Formats / Sizes:
-            </span>
-            <div className="flex flex-wrap gap-1.5">
-              {product.sizes.map((size, idx) => (
-                <span
-                  key={idx}
-                  className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-[11px] font-medium border border-slate-200/60"
-                >
-                  {size}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Pricing & Inquiry Footer */}
-      <div className="px-5 pb-5 pt-3 border-t border-slate-100 space-y-3 bg-slate-50/50">
-        <div className="flex items-center justify-between">
-          <div>
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-              Price (LKR)
-            </span>
-            {product.priceLKR !== null ? (
-              <span className="text-base font-extrabold text-slate-900 font-heading">
-                Rs. {product.priceLKR.toLocaleString()}
-              </span>
-            ) : (
-              <span className="inline-flex items-center gap-1 text-xs font-bold text-sky-700 bg-sky-100/70 px-2.5 py-1 rounded-md border border-sky-200">
-                <HelpCircle className="w-3 h-3 text-sky-600 shrink-0" />
-                <span>Contact us for pricing</span>
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* Price Note */}
-        <p className="text-[11px] text-slate-500 italic leading-snug">
-          {product.priceNote}
-        </p>
-
-        {/* Inquire on WhatsApp CTA */}
-        <a
-          href={getWhatsAppUrl(`Hello DN Digital Colour Lab, I would like to inquire about "${product.name}". Could you share the current pricing and availability?`)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full inline-flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-colors"
-        >
-          <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
-          <span>Inquire via WhatsApp</span>
-        </a>
-      </div>
+{/* Commercial Offset Flyer Banner */}
+<div className="mt-10 rounded-2xl overflow-hidden border border-outline-variant/30 bg-surface-container-lowest shadow-sm grid grid-cols-1 md:grid-cols-12 items-center">
+  <div className="md:col-span-4 h-52 sm:h-60 overflow-hidden bg-surface-container">
+    <img 
+      src="/images/offset-services-flyer.jpg" 
+      alt="DN Digital Offset Print Catalog" 
+      className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
+    />
+  </div>
+  <div className="md:col-span-8 p-6 sm:p-8 space-y-2">
+    <span className="text-label-sm font-label-sm text-secondary font-semibold uppercase tracking-wider">Commercial &amp; Corporate Orders</span>
+    <h4 className="text-title-lg font-title-lg font-bold text-on-surface">Need Custom Wedding Stationery, Leaflets, or Corporate Essentials?</h4>
+    <p className="text-body-sm font-body-sm text-on-surface-variant leading-relaxed">
+      We design and print suppliers essentials, corporate stationeries, calendar printing, leaflets, wedding stationery, mugs, wire-bound documents, posters, and certificates with Panadura roadside pickup.
+    </p>
+    <div className="pt-2 flex flex-wrap items-center gap-3">
+      <a className="inline-flex items-center gap-2 px-4 py-2 bg-secondary text-on-secondary rounded-lg text-label-sm font-label-sm font-semibold hover:brightness-110 transition-all" href="https://wa.me/94777312167?text=Hi%2C%20I%20would%20like%20to%20inquire%20about%20commercial%20offset%20printing" target="_blank" rel="noopener noreferrer">
+        <span className="material-symbols-outlined text-sm">chat</span> WhatsApp for Catalog
+      </a>
+      <a className="inline-flex items-center gap-1.5 text-label-sm font-label-sm font-semibold text-primary hover:underline" href="tel:+94777312167">
+        <span className="material-symbols-outlined text-sm">call</span> Call 077 731 2167
+      </a>
     </div>
+  </div>
+</div>
+
+<div className="mt-8 p-4 rounded-xl bg-surface-container-low border border-outline-variant/30 flex items-center gap-3">
+<span className="material-symbols-outlined text-secondary">info</span>
+<p className="text-body-sm font-body-sm text-on-surface-variant">
+<strong>Note:</strong> Prices subject to paper stock, glass finishes, and volume discounts. Contact our Panadura lab for instant custom quotations.
+          </p>
+</div>
+</div>
+</section>
+
+
   );
 };
-
